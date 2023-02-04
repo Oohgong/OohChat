@@ -10,15 +10,14 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping("chat")
 @Slf4j
 public class ChatController {
 
-	@GetMapping("chating/{roomNum}")
+	@GetMapping("/chating/{roomNum}")
 	public ModelAndView chat (HttpSession session, @PathVariable String roomNum) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("roomNum", roomNum);
-		mv.setViewName("chat/chating");
+		mv.setViewName("chating");
 		return mv;
 	}
 	
