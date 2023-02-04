@@ -20,7 +20,7 @@ public class SocketHandler extends TextWebSocketHandler {
 	private static List<WebSocketSession> weblist = new ArrayList<>();
 	HashMap<String, WebSocketSession> sessionMap = new HashMap<>();
 	
-
+	//메세지를 보냈을 때
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String msg = message.getPayload();
@@ -37,6 +37,7 @@ public class SocketHandler extends TextWebSocketHandler {
 		}
 	}
 
+	//소켓에 연결되었을 때
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		String uri = session.getUri().toString();
@@ -45,6 +46,7 @@ public class SocketHandler extends TextWebSocketHandler {
 		String message = "";
 	}
 
+	//연결이 끊겼을 때
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		// TODO Auto-generated method stub
