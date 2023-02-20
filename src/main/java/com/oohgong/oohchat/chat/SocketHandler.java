@@ -43,14 +43,38 @@ public class SocketHandler extends TextWebSocketHandler {
 		String uri = session.getUri().toString();
 		uri = uri.substring(uri.lastIndexOf("/")+1);
 		
-		String message = "";
+		String message = "{\"type\":\"connect\",\"roomNum\":\""+uri+"\"}";
+		sessionMap.put(session.getId(), session);
+		
+		for (String key : sessionMap.keySet()) {
+			WebSocketSession wss = sessionMap.get(key);
+			try {
+				wss.sendMessage(new TextMessage(message));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	//연결이 끊겼을 때
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		// TODO Auto-generated method stub
-		super.afterConnectionClosed(session, status);
+		
+		String uri = session.getUri().toString();
+		uri = uri.substring(uri.lastIndexOf("/")+1);
+		
+		String message = "{\"type\":\"disconnect\",\"roomNum\":\""+uri+"\"}";
+		sessionMap.remove(session.getId());
+		
+		for(String key : sessionMap.keySet()) {
+			WebSocketSession wss = sessionMap.get(key);
+			
+			try {
+				wss.sendMessage(new TextMessage(message));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	
